@@ -1,4 +1,5 @@
 import express from 'express';
+import config from './boyj/config';
 import Server from './server';
 import {
   createSession,
@@ -25,6 +26,7 @@ app.use('/api', api);
 const server = new Server({
   port: 3000,
   restful: app,
+  redisOptions: config.redisOptions,
 });
 
 server

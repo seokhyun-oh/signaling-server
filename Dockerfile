@@ -1,0 +1,14 @@
+FROM node:8.16.0-jessie-slim as base
+
+ENV BUILD_PREFIX /usr/local/src
+
+WORKDIR ${BUILD_PREFIX}
+
+CMD ["node", "bin/index.js"]
+
+EXPOSE 3000
+EXPOSE 3306
+EXPOSE 5228
+EXPOSE 5229
+EXPOSE 5230
+EXPOSE 6379

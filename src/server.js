@@ -1,4 +1,5 @@
 import listen from 'socket.io';
+import redis from 'socket.io-redis';
 import * as http from 'http';
 import logger from './logger';
 
@@ -19,6 +20,7 @@ export default class SignalingServer {
   constructor({
     port = 3000,
     restful,
+    redisOptions = {},
   }) {
     // 서버의 설정과 초기화에 사용되는 객체
     this.port = port;
@@ -27,6 +29,10 @@ export default class SignalingServer {
 
     // socket.io 관련 객체
     this.io = listen(this.server, {});
+
+    if (redisOptions.host && redisOptions.port) {
+      this.io.adapter(redis(redisOptions));
+    }
 
     // hook methods
     this.createSession = defaultParam => defaultParam;
@@ -184,7 +190,7 @@ export default class SignalingServer {
       });
     });
 
-    this.server.listen(3000);
+    this.server.listen(port);
     logger.info(`server started at port ${port}`);
   }
 
